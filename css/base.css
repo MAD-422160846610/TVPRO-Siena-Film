@@ -1,0 +1,259 @@
+/* ===================================================
+   TV PRO — Base Reset & Global Styles
+   =================================================== */
+
+/* Modern Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-cuerpo);
+  font-weight: var(--fw-regular);
+  color: var(--color-text-primario);
+  background-color: var(--color-bg-principal);
+  line-height: var(--lh-body);
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-brand-primario);
+  color: var(--color-text-primario);
+}
+
+/* Scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secundario);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ui-borde);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-desactivado);
+}
+
+/* Links */
+a {
+  color: var(--color-text-primario);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-brand-primario);
+}
+
+/* Images */
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-titulos);
+  color: var(--color-text-primario);
+  font-weight: var(--fw-black);
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+}
+
+p {
+  font-size: var(--fs-body1);
+  line-height: var(--lh-body);
+  color: var(--color-text-secundario);
+}
+
+.caption {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--color-text-desactivado);
+}
+
+/* Utility */
+.container {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: var(--grid-margin-desktop);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-inline: var(--grid-margin-mobile);
+  }
+}
+
+/* Section spacing */
+section {
+  padding-block: var(--space-4xl);
+}
+
+/* ── Scroll Reveal Animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity var(--dur-base) var(--ease-expo),
+              transform var(--dur-base) var(--ease-expo);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+
+/* Clip Reveal */
+.clip-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--dur-slow) var(--ease-expo);
+}
+
+.clip-reveal.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── Intro Animations (JS-orchestrated, NOT scroll-based) ── */
+
+/* FadeUp intro — for badge, subtitle, CTAs */
+.intro-fadeup {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--dur-base) var(--ease-expo),
+              transform var(--dur-base) var(--ease-expo);
+}
+
+.intro-fadeup.intro-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Clip reveal intro — for hero title (cinematic curtain from bottom) */
+.intro-clip {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--dur-slow) var(--ease-expo);
+}
+
+.intro-clip.intro-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* SlideDown intro — for header */
+.intro-slidedown {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.7s var(--ease-expo),
+              opacity 0.7s var(--ease-expo);
+}
+
+.intro-slidedown.intro-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Fade in — for scroll indicator */
+.intro-fade {
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-expo);
+}
+
+.intro-fade.intro-visible {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════
+   CHAR ROLL — Siena.film style title animation
+   Cada caracter está envuelto en overflow:hidden.
+   JS splitea, CSS hace el roll.
+   ═══════════════════════════════════════════════════ */
+
+/* Wrapper por carácter — JS añade esto */
+.char-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: inherit;
+}
+
+/* El span interno del caracter que se anima */
+.char-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform var(--dur-roll) var(--ease-expo);
+}
+
+/* Cuando el padre con .char-roll recibe .is-visible */
+.char-roll.is-visible .char-inner {
+  transform: translateY(0);
+}
+
+/* El stagger por letra se inyecta como style via JS */
+
+/* ── Overline reveal para h2 de secciones ── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-brand-primario);
+  margin-bottom: var(--space-lg);
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.8s var(--ease-expo);
+}
+
+.is-visible .section-label::before,
+.reveal.is-visible .section-label::before {
+  width: 24px;
+}

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TV PRO — La señal que define el estándar de la televisión profesional. Deportes, noticias, entretenimiento y documentales en la más alta calidad." />
+  <title>TV PRO — Televisión Profesional</title>
+
+  <!-- Preload critical assets -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700;900&display=swap" as="style" />
+  <link rel="preload" href="/assets/images/hero-bg.png" as="image" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components/grain.css" />
+  <link rel="stylesheet" href="/css/components/preloader.css" />
+  <link rel="stylesheet" href="/css/components/header.css" />
+  <link rel="stylesheet" href="/css/components/hero.css" />
+  <link rel="stylesheet" href="/css/components/buttons.css" />
+  <link rel="stylesheet" href="/css/components/programs.css" />
+  <link rel="stylesheet" href="/css/components/sections.css" />
+  <link rel="stylesheet" href="/css/components/ticket.css" />
+
+  <!-- Favicon (inline SVG as data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23E60000'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='900' font-size='12'>TV</text></svg>" />
+</head>
+<body class="is-loading">
+
+  <!-- =================================================
+       FILM GRAIN OVERLAY — Persistent celuloide texture
+       ================================================= -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- =================================================
+       PRELOADER — Zebra Bars (Siena-style)
+       ================================================= -->
+  <div class="preloader" id="preloader">
+    <!-- 16 barras verticales alternadas blanco/negro -->
+    <div class="preloader__bars" aria-hidden="true">
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+      <div class="preloader__bar-v"></div>
+    </div>
+    <div class="preloader__glitch"></div>
+    <!-- Logo sobre las barras con mix-blend-mode -->
+    <div class="preloader__brand">
+      <div class="preloader__icon">TV</div>
+      <span class="preloader__text">TV <span class="accent">PRO</span></span>
+    </div>
+    <!-- Barra de progreso -->
+    <div class="preloader__bar-track">
+      <div class="preloader__bar" id="preloader-bar"></div>
+    </div>
+    <!-- Frame counter — detalle cinematográfico -->
+    <div class="preloader__frame-counter" id="frame-counter">000</div>
+  </div>
+
+  <!-- =================================================
+       TICKET UI — Section context widget (Siena-style)
+       ================================================= -->
+  <div class="ticket" id="ticket" aria-label="Sección actual">
+    <div class="ticket__header" id="ticket-header">
+      <div class="ticket__thumb" id="ticket-thumb">TV</div>
+      <span class="ticket__name" id="ticket-name">TV PRO</span>
+      <svg class="ticket__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="ticket__meta" id="ticket-meta">
+      <div class="ticket__meta-item">
+        <span class="ticket__meta-label">Tipo</span>
+        <span class="ticket__meta-value" id="ticket-type">Canal</span>
+      </div>
+      <div class="ticket__meta-item">
+        <span class="ticket__meta-label">Año</span>
+        <span class="ticket__meta-value">2026</span>
+      </div>
+      <div class="ticket__meta-item">
+        <span class="ticket__meta-label">HD</span>
+        <span class="ticket__meta-value">4K</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       HEADER / NAVIGATION
+       ═══════════════════════════════════════════════════ -->
+  <header class="header intro-slidedown" id="header">
+    <div class="container header__inner">
+      <!-- Logo -->
+      <a href="#" class="header__logo" id="logo">
+        <div class="header__logo-icon">TV</div>
+        <span class="header__logo-text">TV <span class="accent">PRO</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="header__nav" id="main-nav">
+        <a href="#programs" class="header__nav-link active" id="nav-programs">Programas</a>
+        <a href="#features" class="header__nav-link" id="nav-features">Características</a>
+        <a href="#about" class="header__nav-link" id="nav-about">Nosotros</a>
+        <a href="#contact" class="header__nav-link" id="nav-contact">Contacto</a>
+        <div class="header__cta">
+          <div class="magnetic-wrap">
+            <a href="#" class="btn btn--primary" id="nav-cta">EN VIVO</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile Burger -->
+      <button class="header__burger" id="menu-burger" aria-label="Menú">
+        <span class="header__burger-line"></span>
+        <span class="header__burger-line"></span>
+        <span class="header__burger-line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Nav Overlay -->
+    <nav class="header__mobile-nav" id="mobile-nav">
+      <a href="#programs" class="header__nav-link">Programas</a>
+      <a href="#features" class="header__nav-link">Características</a>
+      <a href="#about" class="header__nav-link">Nosotros</a>
+      <a href="#contact" class="header__nav-link">Contacto</a>
+      <div class="magnetic-wrap">
+        <a href="#" class="btn btn--primary">EN VIVO</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════
+       HERO — CINEMATIC FULLSCREEN
+       ═══════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <img
+      src="/assets/images/hero-bg.png"
+      alt="Estudio de TV PRO"
+      class="hero__media"
+      loading="eager"
+    />
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <div class="hero__badge intro-fadeup">
+        <span class="hero__badge-dot"></span>
+        <span class="hero__badge-text">En Vivo Ahora</span>
+      </div>
+      <h1 class="hero__title intro-clip">
+        LA SEÑAL QUE DEFINE EL <span class="accent">ESTÁNDAR</span>
+      </h1>
+      <p class="hero__subtitle intro-fadeup">
+        Televisión profesional de clase mundial. Deportes, noticias,
+        entretenimiento y documentales en la más alta calidad de producción.
+      </p>
+      <div class="hero__actions intro-fadeup">
+        <div class="magnetic-wrap">
+          <a href="#programs" class="btn btn--primary" id="hero-cta-primary">
+            VER PROGRAMACIÓN
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </a>
+        </div>
+        <div class="magnetic-wrap">
+          <a href="#features" class="btn btn--secondary" id="hero-cta-secondary">
+            CONOCER MÁS
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__scroll-indicator intro-fade">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       STATS MARQUEE — SOCIAL PROOF
+       ═══════════════════════════════════════════════════ -->
+  <section class="stats-marquee" id="stats">
+    <div class="stats-marquee__track">
+      <!-- Duplicated for infinite scroll effect -->
+      <div class="stat-item">
+        <span class="stat-item__number" data-count="2500">0</span>
+        <span class="stat-item__label">Horas de contenido al mes</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number"><span data-count="15" data-suffix="M">0</span></span>
+        <span class="stat-item__label">Espectadores activos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number" data-count="47">0</span>
+        <span class="stat-item__label">Premios internacionales</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number"><span class="accent">#</span><span data-count="1">0</span></span>
+        <span class="stat-item__label">En audiencia regional</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number" data-count="120" data-suffix="+">0</span>
+        <span class="stat-item__label">Periodistas profesionales</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number"><span data-count="4" data-suffix="K">0</span></span>
+        <span class="stat-item__label">Producción por año</span>
+      </div>
+      <!-- Duplicate set for seamless marquee -->
+      <div class="stat-item">
+        <span class="stat-item__number" data-count="2500">0</span>
+        <span class="stat-item__label">Horas de contenido al mes</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number"><span data-count="15" data-suffix="M">0</span></span>
+        <span class="stat-item__label">Espectadores activos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number" data-count="47">0</span>
+        <span class="stat-item__label">Premios internacionales</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number"><span class="accent">#</span><span data-count="1">0</span></span>
+        <span class="stat-item__label">En audiencia regional</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number" data-count="120" data-suffix="+">0</span>
+        <span class="stat-item__label">Periodistas profesionales</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__number"><span data-count="4" data-suffix="K">0</span></span>
+        <span class="stat-item__label">Producción por año</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PROGRAMS — FULLSCREEN REEL (Siena-style)
+       Cada slide = 100vh. Floating card with rounded
+       corners, acclaim panel, metadata row.
+       ═══════════════════════════════════════════════════ -->
+  <section class="programs-reel" id="programs">
+
+    <!-- Slide 1: ARENA DEPORTIVA -->
+    <div class="ps" id="slide-sports" data-name="Arena Deportiva" data-type="Deportes" data-schedule="Lun–Vie">
+      <div class="ps__card">
+        <img src="/assets/images/program-sports.png" alt="Arena Deportiva" class="ps__img" loading="lazy" />
+        <div class="ps__overlay"></div>
+        <div class="ps__top">
+          <div class="ps__year">2026</div>
+          <div class="ps__sched">LUNES A VIERNES<br>20:00HS</div>
+          <div class="ps__badge ps__badge--live"><span class="ps__dot"></span>EN VIVO</div>
+        </div>
+        <div class="ps__content">
+          <span class="ps__cat">DEPORTES</span>
+          <h3 class="ps__title">ARENA<br>DEPORTIVA</h3>
+          <div class="ps__meta">
+            <div class="ps__mc"><span class="ps__ml">CONDUCTOR</span><span class="ps__mv">——— CARLOS MÉNDEZ</span></div>
+            <div class="ps__mc"><span class="ps__ml">AÑO</span><span class="ps__mv">——— 2026</span></div>
+            <div class="ps__mc"><span class="ps__ml">CATEGORÍA</span><span class="ps__mv">——— DEPORTES</span></div>
+          </div>
+        </div>
+        <div class="ps__acclaim">
+          <div class="ps__ai"><p class="ps__al">AUDIENCIA RÉCORD</p><p class="ps__aq">"EL MEJOR DEPORTIVO<br>DE LA REGIÓN"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">PREMIO TVYRADIO</p><p class="ps__aq">"TELEVISIÓN DE<br>PRIMER NIVEL"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">CRÍTICA</p><p class="ps__aq">"LOS MEJORES ANÁLISIS<br>EN VIVO"</p><div class="ps__stars">★★★★★</div></div>
+        </div>
+        <a href="#" class="ps__explore">VER PROGRAMA <span class="ps__arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- Slide 2: INFORME CENTRAL -->
+    <div class="ps" id="slide-news" data-name="Informe Central" data-type="Noticias" data-schedule="Diario">
+      <div class="ps__card">
+        <img src="/assets/images/program-news.png" alt="Informe Central" class="ps__img" loading="lazy" />
+        <div class="ps__overlay"></div>
+        <div class="ps__top">
+          <div class="ps__year">2026</div>
+          <div class="ps__sched">TODOS LOS DÍAS<br>21:00HS</div>
+          <div class="ps__badge ps__badge--live"><span class="ps__dot"></span>EN VIVO</div>
+        </div>
+        <div class="ps__content">
+          <span class="ps__cat">NOTICIAS</span>
+          <h3 class="ps__title">INFORME<br>CENTRAL</h3>
+          <div class="ps__meta">
+            <div class="ps__mc"><span class="ps__ml">CONDUCTORA</span><span class="ps__mv">——— ANA CRISTINA WALSH</span></div>
+            <div class="ps__mc"><span class="ps__ml">AÑO</span><span class="ps__mv">——— 2026</span></div>
+            <div class="ps__mc"><span class="ps__ml">CATEGORÍA</span><span class="ps__mv">——— NOTICIAS</span></div>
+          </div>
+        </div>
+        <div class="ps__acclaim">
+          <div class="ps__ai"><p class="ps__al">CONFIABILIDAD</p><p class="ps__aq">"EL INFORMATIVO<br>MÁS CONFIABLE"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">PERIODISMO</p><p class="ps__aq">"SIN COMPROMISOS,<br>TODA LA VERDAD"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">PREMIO PRENSA 2025</p><p class="ps__aq">"MEJOR NOTICIERO<br>DEL AÑO"</p><div class="ps__stars">★★★★★</div></div>
+        </div>
+        <a href="#" class="ps__explore">VER PROGRAMA <span class="ps__arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- Slide 3: SOMBRAS DEL SUR -->
+    <div class="ps" id="slide-drama" data-name="Sombras del Sur" data-type="Drama" data-schedule="Domingos">
+      <div class="ps__card">
+        <img src="/assets/images/program-drama.png" alt="Sombras del Sur" class="ps__img" loading="lazy" />
+        <div class="ps__overlay ps__overlay--soft"></div>
+        <div class="ps__top">
+          <div class="ps__year">2026</div>
+          <div class="ps__sched">DOMINGOS<br>22:00HS</div>
+          <div class="ps__badge ps__badge--secondary">ESTRENO</div>
+        </div>
+        <div class="ps__content">
+          <span class="ps__cat">DRAMA</span>
+          <h3 class="ps__title">SOMBRAS<br>DEL SUR</h3>
+          <div class="ps__meta">
+            <div class="ps__mc"><span class="ps__ml">DIRECCIÓN</span><span class="ps__mv">——— VALENTINA RÍOS</span></div>
+            <div class="ps__mc"><span class="ps__ml">AÑO</span><span class="ps__mv">——— 2026</span></div>
+            <div class="ps__mc"><span class="ps__ml">CATEGORÍA</span><span class="ps__mv">——— DRAMA</span></div>
+          </div>
+        </div>
+        <div class="ps__acclaim">
+          <div class="ps__ai"><p class="ps__al">PRODUCCIÓN ORIGINAL</p><p class="ps__aq">"DRAMA DE NIVEL<br>CINEMATOGRÁFICO"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">FESTIVAL MIRADAS</p><p class="ps__aq">"MEJOR PRODUCCIÓN<br>DRAMÁTICA 2026"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">CRÍTICA</p><p class="ps__aq">"IMPERDIBLE<br>SEMANA A SEMANA"</p><div class="ps__stars">★★★★★</div></div>
+        </div>
+        <a href="#" class="ps__explore">VER PROGRAMA <span class="ps__arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- Slide 4: NOCHE PRO -->
+    <div class="ps" id="slide-entertainment" data-name="Noche PRO" data-type="Entretenimiento" data-schedule="Vie–Sáb">
+      <div class="ps__card">
+        <img src="/assets/images/program-entertainment.png" alt="Noche PRO" class="ps__img" loading="lazy" />
+        <div class="ps__overlay ps__overlay--soft"></div>
+        <div class="ps__top">
+          <div class="ps__year">2026</div>
+          <div class="ps__sched">VIERNES Y SÁBADOS<br>23:30HS</div>
+          <div class="ps__badge ps__badge--secondary">LATE NIGHT</div>
+        </div>
+        <div class="ps__content">
+          <span class="ps__cat">ENTRETENIMIENTO</span>
+          <h3 class="ps__title">NOCHE<br>PRO</h3>
+          <div class="ps__meta">
+            <div class="ps__mc"><span class="ps__ml">CONDUCTOR</span><span class="ps__mv">——— DIEGO FALCONE</span></div>
+            <div class="ps__mc"><span class="ps__ml">AÑO</span><span class="ps__mv">——— 2026</span></div>
+            <div class="ps__mc"><span class="ps__ml">CATEGORÍA</span><span class="ps__mv">——— ENTRETENIMIENTO</span></div>
+          </div>
+        </div>
+        <div class="ps__acclaim">
+          <div class="ps__ai"><p class="ps__al">ENTRETENIMIENTO</p><p class="ps__aq">"LA NOCHE<br>MÁS ESPERADA"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">RATING NOCTURNO</p><p class="ps__aq">"DOMINA<br>DESPUÉS DE MEDIANOCHE"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">PREMIO DIVERTV</p><p class="ps__aq">"MEJOR LATE NIGHT<br>DEL AÑO"</p><div class="ps__stars">★★★★★</div></div>
+        </div>
+        <a href="#" class="ps__explore">VER PROGRAMA <span class="ps__arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- Slide 5: PLANETA EXTREMO -->
+    <div class="ps" id="slide-documentary" data-name="Planeta Extremo" data-type="Documental" data-schedule="Miércoles">
+      <div class="ps__card">
+        <img src="/assets/images/program-documentary.png" alt="Planeta Extremo" class="ps__img" loading="lazy" />
+        <div class="ps__overlay ps__overlay--soft"></div>
+        <div class="ps__top">
+          <div class="ps__year">2026</div>
+          <div class="ps__sched">MIÉRCOLES<br>20:00HS</div>
+          <div class="ps__badge ps__badge--secondary">NUEVA TEMPORADA</div>
+        </div>
+        <div class="ps__content">
+          <span class="ps__cat">DOCUMENTAL</span>
+          <h3 class="ps__title">PLANETA<br>EXTREMO</h3>
+          <div class="ps__meta">
+            <div class="ps__mc"><span class="ps__ml">DIRECCIÓN</span><span class="ps__mv">——— MARCOS LUNA</span></div>
+            <div class="ps__mc"><span class="ps__ml">AÑO</span><span class="ps__mv">——— 2026</span></div>
+            <div class="ps__mc"><span class="ps__ml">CATEGORÍA</span><span class="ps__mv">——— DOCUMENTAL</span></div>
+          </div>
+        </div>
+        <div class="ps__acclaim">
+          <div class="ps__ai"><p class="ps__al">NATURALEZA Y AVENTURA</p><p class="ps__aq">"IMÁGENES QUE<br>TE DEJAN SIN ALIENTO"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">PREMIO NATIONAL</p><p class="ps__aq">"MEJOR DOCUMENTAL<br>AMBIENTAL 2025"</p><div class="ps__stars">★★★★★</div></div>
+          <div class="ps__ai"><p class="ps__al">CRÍTICA CIENTÍFICA</p><p class="ps__aq">"RIGUROSO, BELLO<br>Y NECESARIO"</p><div class="ps__stars">★★★★★</div></div>
+        </div>
+        <a href="#" class="ps__explore">VER PROGRAMA <span class="ps__arrow">→</span></a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       FEATURES — HORIZONTAL SCROLL
+       ═══════════════════════════════════════════════════ -->
+  <section class="features" id="features">
+    <div class="container features__inner reveal">
+      <span class="features__label">¿Por qué TV PRO?</span>
+      <h2 class="features__title">Producción de <span class="accent">otro nivel</span></h2>
+      <p class="features__subtitle">
+        Tecnología de punta y talento de clase mundial en cada cuadro que emitimos.
+      </p>
+    </div>
+
+    <div class="features__track">
+      <article class="feature-card reveal">
+        <div class="feature-card__icon">🎬</div>
+        <h3 class="feature-card__title">4K HDR</h3>
+        <p class="feature-card__desc">
+          Toda nuestra señal en resolución 4K con HDR10+ para una experiencia visual cinematográfica real.
+        </p>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-1">
+        <div class="feature-card__icon">📡</div>
+        <h3 class="feature-card__title">Cobertura Global</h3>
+        <p class="feature-card__desc">
+          Red de corresponsales en más de 35 países. Noticias de primera mano, sin intermediarios.
+        </p>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-2">
+        <div class="feature-card__icon">🏟️</div>
+        <h3 class="feature-card__title">Deportes Exclusivos</h3>
+        <p class="feature-card__desc">
+          Derechos exclusivos de las ligas más importantes. Cada partido, cada gol, cada emoción.
+        </p>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-3">
+        <div class="feature-card__icon">🎭</div>
+        <h3 class="feature-card__title">Producciones Originales</h3>
+        <p class="feature-card__desc">
+          Series y documentales de producción propia con estándares de calidad internacional.
+        </p>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-4">
+        <div class="feature-card__icon">📱</div>
+        <h3 class="feature-card__title">Multiplataforma</h3>
+        <p class="feature-card__desc">
+          TV, web, móvil y smart TV. Donde estés, cuando quieras, la misma calidad profesional.
+        </p>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-5">
+        <div class="feature-card__icon">🔊</div>
+        <h3 class="feature-card__title">Audio Dolby Atmos</h3>
+        <p class="feature-card__desc">
+          Sonido envolvente que te pone adentro de la escena. Cada emisión con audio de nivel cine.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       QUOTE SECTION
+       ═══════════════════════════════════════════════════ -->
+  <section class="quote-section reveal" id="about">
+    <div class="container">
+      <blockquote class="quote-section__text">
+        "No hacemos televisión. Hacemos <span class="accent">experiencias</span> que conectan con millones."
+      </blockquote>
+      <div class="quote-section__divider"></div>
+      <p class="quote-section__attribution">— Dirección General, TV PRO</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════ -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer__inner">
+        <!-- Brand Column -->
+        <div class="footer__col">
+          <a href="#" class="header__logo">
+            <div class="header__logo-icon">TV</div>
+            <span class="header__logo-text">TV <span class="accent">PRO</span></span>
+          </a>
+          <p class="footer__brand-desc">
+            La señal que define el estándar de la televisión profesional en la región. Calidad, compromiso y excelencia en cada segundo al aire.
+          </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Programación</h4>
+          <ul class="footer__links">
+            <li><a href="#">Deportes</a></li>
+            <li><a href="#">Noticias</a></li>
+            <li><a href="#">Entertainment</a></li>
+            <li><a href="#">Documentales</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Compañía</h4>
+          <ul class="footer__links">
+            <li><a href="#">Sobre Nosotros</a></li>
+            <li><a href="#">Trabaja con Nosotros</a></li>
+            <li><a href="#">Prensa</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Seguinos</h4>
+          <ul class="footer__links">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__copyright">© 2026 TV PRO. Todos los derechos reservados.</span>
+        <div class="footer__legal">
+          <a href="#">Términos</a>
+          <a href="#">Privacidad</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

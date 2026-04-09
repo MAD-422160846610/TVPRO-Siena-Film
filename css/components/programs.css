@@ -1,0 +1,370 @@
+/* ===================================================
+   TV PRO — Program Slides (Siena-style Fullscreen Reel)
+   .ps = program-slide (BEM abreviado para concisión)
+   =================================================== */
+
+/* ── Section wrapper ── */
+.programs-reel {
+  background: var(--color-bg-principal);
+}
+
+/* ── Cada slide = un viewport completo ── */
+.ps {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 36px;
+  position: relative;
+  background: var(--color-bg-principal);
+}
+
+/* ── Card flotante con esquinas redondeadas (clave Siena) ── */
+.ps__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0a0a0a;
+  /* El blur y offset de velocidad lo aplica JS via style inline */
+  transition: filter 0.1s linear, transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: filter, transform;
+  transform-origin: center center;
+}
+
+/* Efecto de salto de frame (flicker vertical) */
+.ps__card.is-jumping {
+  animation: frame-jump 0.1s steps(2) infinite;
+}
+
+@keyframes frame-jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px) scaleY(1.01); }
+  100% { transform: translateY(4px) scaleY(0.99); }
+}
+
+/* Gradient background cards */
+.ps__card--bg {
+  background: var(--bg, #0a0a0a);
+}
+
+/* ── Imagen de fondo ── */
+.ps__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 1.2s var(--ease-expo);
+}
+
+/* Zoom-out suave cuando la slide es activa */
+.ps.is-active .ps__img {
+  transform: scale(1);
+}
+
+/* ── Overlay de gradiente (inspirado en Siena) ── */
+.ps__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to right, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.4) 45%, rgba(5,5,5,0.05) 75%, transparent 90%),
+    linear-gradient(to top, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.5) 30%, rgba(5,5,5,0.1) 60%, transparent 80%),
+    linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, transparent 25%);
+}
+
+/* Overlay más suave para cards de gradiente */
+.ps__overlay--soft {
+  background:
+    linear-gradient(to right, rgba(5,5,5,0.75) 0%, rgba(5,5,5,0.3) 50%, transparent 80%),
+    linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.3) 40%, transparent 70%);
+}
+
+/* ── Scanline sutil — textura viva ── */
+.ps__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(0,0,0,0.06) 3px,
+    rgba(0,0,0,0.06) 4px
+  );
+}
+
+/* ── Top-left: year + schedule ── */
+.ps__top {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ps__year {
+  display: inline-block;
+  border: 1px solid rgba(245,245,245,0.3);
+  padding: 2px 8px;
+  font-family: var(--font-titulos);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: rgba(245,245,245,0.65);
+  width: fit-content;
+}
+
+.ps__sched {
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,245,245,0.4);
+  line-height: 1.7;
+}
+
+.ps__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 3px 8px;
+  font-family: var(--font-titulos);
+  font-size: 0.52rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  width: fit-content;
+  border-radius: 1px;
+}
+
+.ps__badge--live {
+  background: var(--color-brand-primario);
+  color: #fff;
+}
+
+.ps__badge--secondary {
+  background: transparent;
+  border: 1px solid rgba(245,245,245,0.35);
+  color: rgba(245,245,245,0.65);
+}
+
+.ps__dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* ── Bottom-left: title + meta ── */
+.ps__content {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 3;
+  max-width: 52%;
+}
+
+.ps__cat {
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,245,245,0.38);
+  margin-bottom: 8px;
+}
+
+.ps__title {
+  font-family: var(--font-titulos);
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  font-weight: var(--fw-black);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: var(--color-text-primario);
+  margin-bottom: 20px;
+
+  /* Clip-path reveal cuando entra la slide */
+  clip-path: inset(0 0 0 0);
+}
+
+/* Animación de roll-up para el título */
+.ps .ps__title {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.9s var(--ease-expo) 0.3s;
+}
+
+.ps.is-active .ps__title {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── Fila de metadata (Director / Año / Categoría) ── */
+.ps__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  border-top: 1px solid rgba(245,245,245,0.1);
+  padding-top: 10px;
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease-expo) 0.7s,
+              transform 0.6s var(--ease-expo) 0.7s;
+}
+
+.ps.is-active .ps__meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ps__mc {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ps__ml {
+  font-size: 0.46rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,245,245,0.3);
+}
+
+.ps__mv {
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(245,245,245,0.6);
+}
+
+/* ── Right: acclaim panel ── */
+.ps__acclaim {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%) translateX(16px);
+  z-index: 3;
+  text-align: right;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-expo) 0.5s,
+              transform 0.8s var(--ease-expo) 0.5s;
+}
+
+.ps.is-active .ps__acclaim {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.ps__ai {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ps__al {
+  font-size: 0.46rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,245,245,0.35);
+  line-height: 1;
+}
+
+.ps__aq {
+  font-family: var(--font-titulos);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: rgba(245,245,245,0.75);
+  line-height: 1.2;
+}
+
+.ps__stars {
+  color: var(--color-brand-primario);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+}
+
+/* ── Bottom-right: Explore button ── */
+.ps__explore {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  border: 1px solid rgba(245,245,245,0.28);
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,245,245,0.85);
+  text-decoration: none;
+  transition: background 0.3s var(--ease-expo),
+              border-color 0.3s var(--ease-expo);
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease-expo) 0.9s,
+              transform 0.6s var(--ease-expo) 0.9s,
+              background 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.ps.is-active .ps__explore {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ps__explore:hover {
+  background: rgba(245,245,245,0.08);
+  border-color: rgba(245,245,245,0.6);
+  color: white;
+}
+
+.ps__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(245,245,245,0.25);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  transition: transform 0.3s var(--ease-expo);
+}
+
+.ps__explore:hover .ps__arrow {
+  transform: translateX(4px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ps {
+    padding: 16px;
+  }
+
+  .ps__title {
+    font-size: clamp(2.2rem, 8vw, 3.5rem);
+  }
+
+  .ps__acclaim {
+    display: none;
+  }
+
+  .ps__content {
+    max-width: 80%;
+  }
+}

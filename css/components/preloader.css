@@ -1,0 +1,202 @@
+/* ===================================================
+   TV PRO — Preloader Cebra (Siena-style)
+   Barras blancas y negras pulsantes + mix-blend-mode
+   para crear la ilusión óptica de "corte de película"
+   =================================================== */
+
+/* Lock scroll while preloader runs */
+body.is-loading {
+  overflow: hidden;
+}
+
+/* ── Zebra Base ── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  /* Cortina de salida: wipe hacia arriba con delay para el glitch */
+  transition: clip-path 0.9s var(--ease-expo) 0.3s;
+  clip-path: inset(0 0 0 0);
+}
+
+.preloader.is-done {
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+  /* El glitch lo manejamos con una animación separada */
+  animation: preloader-exit-glitch 0.4s var(--ease-expo) forwards;
+}
+
+/* ── Capa de Glitch ── */
+.preloader__glitch {
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader.is-done .preloader__glitch {
+  opacity: 1;
+  animation: glitch-flash 0.3s steps(2) infinite;
+}
+
+@keyframes glitch-flash {
+  0%   { transform: translate(0); background: rgba(245,245,245,0.8); }
+  20%  { transform: translate(-10px, 5px) skewX(10deg); background: rgba(0,0,0,0.5); }
+  40%  { transform: translate(10px, -5px) skewX(-10deg); }
+  60%  { transform: translate(-5px, 10px); background: rgba(245,245,245,0.4); }
+  80%  { transform: translate(5px, -10px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes preloader-exit-glitch {
+  0% { transform: scaleY(1); }
+  10% { transform: scaleY(1.02) skewY(1deg); }
+  30% { transform: scaleY(0.9) skewY(-1deg); }
+  100% { transform: scaleY(1); }
+}
+
+/* ── Barras verticales dinámicas ── */
+.preloader__bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  animation: zebra-pulse 0.15s steps(1) infinite;
+}
+
+.preloader__bar-v {
+  flex: 1;
+}
+
+/* Patrón cebra: alternado blanco/negro */
+.preloader__bar-v:nth-child(odd) {
+  background: #f5f5f5;
+}
+
+.preloader__bar-v:nth-child(even) {
+  background: #050505;
+}
+
+/* Animación de parpadeo - invertimos el orden de las barras */
+@keyframes zebra-pulse {
+  0%  { filter: none; }
+  50% { filter: invert(1); }
+}
+
+/* ── Texto del logo sobre las barras ── */
+.preloader__brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  opacity: 0;
+  animation: brand-emerge 0.6s var(--ease-expo) 0.3s forwards;
+
+  /*
+   * MIX-BLEND-MODE: DIFFERENCE
+   * Cuando el texto está sobre barra blanca → se ve negro.
+   * Cuando está sobre barra negra → se ve blanco.
+   * Resultado: el logo parece "cortado" por las barras. CINEMATOGRÁFICO.
+   */
+  mix-blend-mode: difference;
+}
+
+@keyframes brand-emerge {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* El ícono TV necesita color sólido para el blend */
+.preloader__icon {
+  width: 64px;
+  height: 64px;
+  background: #f5f5f5;  /* blanco puro para que blend-mode funcione */
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-titulos);
+  font-size: 1.6rem;
+  font-weight: var(--fw-black);
+  color: #050505;
+  letter-spacing: 0.02em;
+}
+
+.preloader__text {
+  font-family: var(--font-titulos);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: var(--fw-black);
+  color: #f5f5f5;  /* blanco puro para contraste máximo */
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.preloader__text .accent {
+  /* Con blend-mode, no necesitamos color de accent separado,
+     la cebra crea el contraste */
+  color: inherit;
+}
+
+/* ── Barra de progreso (ahora minimalista en la parte inferior) ── */
+.preloader__bar-track {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 1px;
+  background: rgba(245, 245, 245, 0.3);
+  mix-blend-mode: difference;
+  overflow: hidden;
+}
+
+.preloader__bar {
+  width: 0%;
+  height: 100%;
+  background: #f5f5f5;
+  transition: width 0.2s ease-out;
+}
+
+.preloader__bar.is-loading {
+  animation: preloader-bar-fill 2s var(--ease-expo) forwards;
+}
+
+@keyframes preloader-bar-fill {
+  0%   { width: 0%; }
+  20%  { width: 20%; }
+  50%  { width: 55%; }
+  75%  { width: 80%; }
+  90%  { width: 92%; }
+  100% { width: 100%; }
+}
+
+/* Número de frame - pequeño detalle cinematográfico inferior */
+.preloader__frame-counter {
+  position: absolute;
+  bottom: 20px;
+  right: 32px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(245, 245, 245, 0.5);
+  mix-blend-mode: difference;
+  animation: counter-blink 0.1s steps(1) infinite;
+}
+
+@keyframes counter-blink {
+  0%  { opacity: 1; }
+  50% { opacity: 0.3; }
+}

@@ -1,0 +1,187 @@
+/* ===================================================
+   TV PRO — Header / Navigation
+   =================================================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: var(--space-lg) 0;
+  transition: background 0.4s var(--ease-cinematic),
+              padding 0.4s var(--ease-cinematic),
+              backdrop-filter 0.4s var(--ease-cinematic);
+}
+
+.header.is-scrolled {
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  z-index: 101;
+}
+
+.header__logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--color-brand-primario);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-titulos);
+  font-size: 1rem;
+  font-weight: var(--fw-black);
+  color: white;
+  letter-spacing: 0.02em;
+}
+
+.header__logo-text {
+  font-family: var(--font-titulos);
+  font-size: 1.5rem;
+  font-weight: var(--fw-black);
+  color: var(--color-text-primario);
+  letter-spacing: 0.04em;
+}
+
+.header__logo-text .accent {
+  color: var(--color-brand-primario);
+}
+
+/* Nav */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.header__nav-link {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--color-text-secundario);
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.header__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-brand-primario);
+  transition: width 0.4s var(--ease-cinematic);
+}
+
+.header__nav-link:hover {
+  color: var(--color-text-primario);
+}
+
+.header__nav-link:hover::after {
+  width: 100%;
+}
+
+.header__nav-link.active {
+  color: var(--color-text-primario);
+}
+
+.header__nav-link.active::after {
+  width: 100%;
+}
+
+/* CTA in nav */
+.header__cta {
+  margin-left: var(--space-md);
+}
+
+/* ── Mobile burger ── */
+.header__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 101;
+  background: none;
+  border: none;
+  padding: var(--space-sm);
+}
+
+.header__burger-line {
+  width: 24px;
+  height: 2px;
+  background: var(--color-text-primario);
+  transition: var(--transition-default);
+  transform-origin: center;
+}
+
+.header__burger.is-open .header__burger-line:nth-child(1) {
+  transform: rotate(45deg) translateY(5px) translateX(5px);
+}
+
+.header__burger.is-open .header__burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.header__burger.is-open .header__burger-line:nth-child(3) {
+  transform: rotate(-45deg) translateY(-5px) translateX(5px);
+}
+
+/* Mobile overlay */
+.header__mobile-nav {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.97);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xl);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-cinematic);
+}
+
+.header__mobile-nav.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header__mobile-nav .header__nav-link {
+  font-size: var(--fs-h3);
+  font-family: var(--font-titulos);
+  color: var(--color-text-primario);
+}
+
+@media (max-width: 768px) {
+  .header__nav {
+    display: none;
+  }
+
+  .header__burger {
+    display: flex;
+  }
+
+  .header__mobile-nav {
+    display: flex;
+  }
+}

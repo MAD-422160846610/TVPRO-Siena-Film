@@ -1,0 +1,296 @@
+/* ===================================================
+   TV PRO — Features Section (Horizontal Scroll Marquee)
+   =================================================== */
+
+.features {
+  background: var(--color-bg-secundario);
+  overflow: hidden;
+}
+
+.features__inner {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.features__label {
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--color-brand-primario);
+  font-weight: var(--fw-medium);
+  margin-bottom: var(--space-md);
+}
+
+.features__title {
+  margin-bottom: var(--space-lg);
+}
+
+.features__subtitle {
+  max-width: 500px;
+  margin-inline: auto;
+}
+
+/* Feature Cards - Horizontal */
+.features__track {
+  display: flex;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-xl);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-inline: var(--grid-margin-desktop);
+}
+
+.features__track::-webkit-scrollbar {
+  display: none;
+}
+
+.feature-card {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
+  background: var(--color-bg-terciario);
+  border: 1px solid var(--color-ui-borde);
+  border-radius: 8px;
+  padding: var(--space-2xl) var(--space-xl);
+  transition: var(--transition-default);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-brand-primario);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-cinematic);
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-card:hover {
+  border-color: rgba(230, 0, 0, 0.3);
+  transform: translateY(-4px);
+}
+
+.feature-card__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(230, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: var(--space-lg);
+  font-size: 1.5rem;
+}
+
+.feature-card__title {
+  font-family: var(--font-titulos);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.feature-card__desc {
+  font-size: var(--fs-body2);
+  color: var(--color-text-secundario);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .features__track {
+    padding-inline: var(--grid-margin-mobile);
+  }
+
+  .feature-card {
+    flex: 0 0 280px;
+  }
+}
+
+/* ===================================================
+   TV PRO — Stats / Social Proof Marquee
+   =================================================== */
+
+.stats-marquee {
+  padding-block: var(--space-3xl);
+  background: var(--color-bg-principal);
+  border-top: 1px solid var(--color-ui-borde);
+  border-bottom: 1px solid var(--color-ui-borde);
+  overflow: hidden;
+}
+
+.stats-marquee__track {
+  display: flex;
+  gap: var(--space-4xl);
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.stat-item__number {
+  font-family: var(--font-titulos);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: var(--fw-black);
+  color: var(--color-text-primario);
+  line-height: 1;
+}
+
+.stat-item__number .accent {
+  color: var(--color-brand-primario);
+}
+
+.stat-item__label {
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--color-text-desactivado);
+}
+
+/* ===================================================
+   TV PRO — Horizontal Divider / Quote
+   =================================================== */
+
+.quote-section {
+  padding-block: var(--space-4xl);
+  text-align: center;
+  background: var(--color-bg-principal);
+}
+
+.quote-section__text {
+  font-family: var(--font-titulos);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-h2);
+  max-width: 900px;
+  margin-inline: auto;
+  padding-inline: var(--grid-margin-mobile);
+  color: var(--color-text-primario);
+}
+
+.quote-section__text .accent {
+  color: var(--color-brand-primario);
+}
+
+.quote-section__divider {
+  width: 60px;
+  height: 3px;
+  background: var(--color-brand-primario);
+  margin: var(--space-2xl) auto var(--space-lg);
+  border-radius: 2px;
+}
+
+.quote-section__attribution {
+  color: var(--color-text-desactivado);
+  font-size: var(--fs-body2);
+}
+
+/* ===================================================
+   TV PRO — Footer
+   =================================================== */
+
+.footer {
+  background: var(--color-bg-secundario);
+  border-top: 1px solid var(--color-ui-borde);
+  padding-block: var(--space-3xl);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-3xl);
+}
+
+.footer__brand-desc {
+  max-width: 300px;
+  color: var(--color-text-desactivado);
+  font-size: var(--fs-body2);
+  margin-top: var(--space-md);
+  line-height: 1.6;
+}
+
+.footer__col-title {
+  font-family: var(--font-titulos);
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-primario);
+}
+
+.footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.footer__links a {
+  font-size: var(--fs-body2);
+  color: var(--color-text-desactivado);
+  transition: color 0.3s ease;
+}
+
+.footer__links a:hover {
+  color: var(--color-brand-primario);
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-ui-borde);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.footer__copyright {
+  font-size: var(--fs-caption);
+  color: var(--color-text-desactivado);
+  letter-spacing: 0.02em;
+}
+
+.footer__legal {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.footer__legal a {
+  font-size: var(--fs-caption);
+  color: var(--color-text-desactivado);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

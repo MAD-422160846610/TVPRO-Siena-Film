@@ -1,0 +1,174 @@
+{
+  "brand": "TV PRO",
+  "theme": "dark-cinematic",
+  "paleta_colores": {
+    "background": {
+      "principal": "#050505",
+      "secundario": "#121212",
+      "terciario": "#1A1A1A"
+    },
+    "text": {
+      "primario": "#F5F5F5",
+      "secundario": "#A3A3A3",
+      "desactivado": "#525252"
+    },
+    "brand_colors": {
+      "primario": "#E60000",
+      "primario_hover": "#FF1A1A",
+      "acento": "#00E5FF"
+    },
+    "ui": {
+      "borde": "#262626",
+      "error": "#FF3333",
+      "success": "#00CC66"
+    }
+  },
+  "tipografias": {
+    "familias": {
+      "titulos": "'Monument Extended', 'Clash Display', sans-serif",
+      "cuerpo": "'Inter', 'Helvetica Neue', sans-serif",
+      "mono": "'JetBrains Mono', monospace"
+    },
+    "pesos": {
+      "ligero": 300,
+      "regular": 400,
+      "medio": 500,
+      "bold": 700,
+      "black": 900
+    }
+  },
+  "jerarquia_visual": {
+    "h1": { "size_desktop": "5.5rem", "size_mobile": "3rem", "weight": 900, "line_height": 1.1, "letter_spacing": "-0.02em" },
+    "h2": { "size_desktop": "3.5rem", "size_mobile": "2.25rem", "weight": 700, "line_height": 1.2, "letter_spacing": "-0.01em" },
+    "h3": { "size_desktop": "2.5rem", "size_mobile": "1.75rem", "weight": 700, "line_height": 1.3, "letter_spacing": "0" },
+    "body1": { "size_desktop": "1.125rem", "size_mobile": "1rem", "weight": 400, "line_height": 1.6, "letter_spacing": "0" },
+    "body2": { "size_desktop": "0.875rem", "size_mobile": "0.875rem", "weight": 400, "line_height": 1.5, "letter_spacing": "0.01em" },
+    "caption": { "size_desktop": "0.75rem", "size_mobile": "0.75rem", "weight": 500, "line_height": 1.4, "letter_spacing": "0.05em", "text_transform": "uppercase" }
+  },
+  "espaciados": {
+    "base": 8,
+    "escala": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "2xl": "48px",
+      "3xl": "64px",
+      "4xl": "96px",
+      "100vh": "100vh"
+    }
+  },
+  "grid_layout": {
+    "columnas_desktop": 12,
+    "columnas_tablet": 8,
+    "columnas_mobile": 4,
+    "gutter": "24px",
+    "margin_desktop": "5vw",
+    "margin_mobile": "24px",
+    "max_width": "1440px"
+  },
+  "estilos_botones": {
+    "primario": {
+      "bg": "#E60000",
+      "text": "#FFFFFF",
+      "border_radius": "2px",
+      "padding": "16px 32px",
+      "font_weight": 700,
+      "text_transform": "uppercase",
+      "letter_spacing": "0.05em"
+    },
+    "secundario": {
+      "bg": "transparent",
+      "text": "#F5F5F5",
+      "border": "1px solid #525252",
+      "border_radius": "2px",
+      "padding": "16px 32px",
+      "font_weight": 500,
+      "text_transform": "uppercase",
+      "letter_spacing": "0.05em"
+    },
+    "ghost": {
+      "bg": "transparent",
+      "text": "#A3A3A3",
+      "padding": "8px 16px",
+      "font_weight": 500
+    }
+  },
+  "sombras": {
+    "sm": "0 2px 8px rgba(0,0,0,0.4)",
+    "md": "0 8px 24px rgba(0,0,0,0.6)",
+    "lg": "0 16px 48px rgba(0,0,0,0.8)",
+    "glow_primario": "0 0 24px rgba(230,0,0,0.4)"
+  },
+  "estados_hover_active": {
+    "botones_primarios": {
+      "hover": { "transform": "scale(1.02)", "bg": "#FF1A1A", "box_shadow": "glow_primario" },
+      "active": { "transform": "scale(0.98)" }
+    },
+    "botones_secundarios": {
+      "hover": { "border_color": "#F5F5F5", "text": "#FFFFFF" },
+      "active": { "bg": "#1A1A1A" }
+    },
+    "enlaces": {
+      "hover": { "color": "#E60000", "text_decoration": "underline" }
+    },
+    "tarjetas": {
+      "hover": { "transform": "translateY(-8px)", "box_shadow": "lg", "image_scale": "1.05" }
+    }
+  },
+  "iconografia": {
+    "estilo": "Minimalista, líneas finas (1.5px), sin relleno",
+    "tamaños": {
+      "sm": "16px",
+      "md": "24px",
+      "lg": "32px",
+      "xl": "48px"
+    }
+  },
+  "animaciones": {
+    "instrucciones_generales": "Todas las animaciones deben sentirse cinematográficas, fluidas y con un easing tipo custom cubic-bezier para emular el peso y la inercia de una cámara de cine.",
+    "easing_principal": "cubic-bezier(0.76, 0, 0.24, 1)",
+    "duracion_base": "0.8s",
+    "keyframes": {
+      "fadeUp": {
+        "0%": { "opacity": 0, "transform": "translateY(40px)" },
+        "100%": { "opacity": 1, "transform": "translateY(0)" }
+      },
+      "revealClip": {
+        "0%": { "clip-path": "inset(100% 0 0 0)" },
+        "100%": { "clip-path": "inset(0 0 0 0)" }
+      },
+      "imageParallax": {
+        "instruccion": "Scale inicial de 1.2 bajando a 1.0 según progreso del scroll"
+      }
+    },
+    "scripts": {
+      "scroll_revelacion": "Usa IntersectionObserver para activar la clase .is-visible en secciones al 15% de visibilidad.",
+      "magnetic_buttons": "Calcula el mousemove relativo al centro del botón y aplica un transformacion ligera (max 15px) en X e Y al hacer hover."
+    }
+  },
+  "transiciones": {
+    "default": "all 0.4s cubic-bezier(0.76, 0, 0.24, 1)",
+    "rapida": "all 0.2s ease-out",
+    "lenta": "all 0.8s cubic-bezier(0.76, 0, 0.24, 1)"
+  },
+  "patrones_reutilizables": {
+    "hero_cinematico": "Video o imagen heroica full-screen (100vh) con overlay gradiente negro debajo para que resalte la tipografía h1 gigante en el centro.",
+    "carrusel_horizontal": "Layout de overflow-x oculto con scroll horizontal vía JS (Draggable o Lenis) para mostrar los distintos programas/canales.",
+    "tarjeta_programa": "Proporción 16:9 con imagen de fondo, título superpuesto en la esquina inferior izquierda. En hover, la imagen hace ligero zoom in y el overlay se oscurece."
+  },
+  "diseno_adaptativo": {
+    "breakpoints": {
+      "mobile": "0px",
+      "tablet": "768px",
+      "desktop": "1024px",
+      "ultrawide": "1440px"
+    },
+    "reglas": [
+      "Tipografía fluida usando 'clamp' para adaptarse dinámicamente entre viewport mobile y desktop.",
+      "El hover effect se deshabilita en touch devices.",
+      "El carrusel horizontal pasa a ser un stack vertical o slider nativo en mobile."
+    ]
+  }
+}
