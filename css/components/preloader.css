@@ -48,7 +48,8 @@ body.is-loading {
 .preloader__logo-img {
   width: 240px;
   height: auto;
-  filter: invert(1); /* Si el logo es oscuro, lo invertimos para el modo difference */
+  /* Convertimos el logo a blanco puro para que el 'difference' funcione como zebra */
+  filter: brightness(0) invert(1);
 }
 
 .preloader__glitch {
