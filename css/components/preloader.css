@@ -48,7 +48,7 @@ body.is-loading {
 }
 
 .preloader .tv-logo-svg {
-  width: 420px; /* Tamaño cinematic */
+  width: 600px; /* Tamaño cinematic real, compensando aire */
   height: auto;
   fill: #ffffff !important;
   color: #ffffff !important;

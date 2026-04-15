@@ -42,14 +42,16 @@
 }
 
 .tv-logo-svg {
-  height: 34px; /* Aumentado para mayor presencia en desktop */
+  height: 80px; /* Compensación por espacio vacío interno (~33px ópticos) */
   width: auto;
   fill: var(--color-text-primario);
-  transition: fill 0.3s var(--ease-cinematic);
+  transition: height 0.4s var(--ease-cinematic), 
+              fill 0.3s var(--ease-cinematic);
+  transform-origin: left center;
 }
 
 .header.is-scrolled .tv-logo-svg {
-  height: 28px;
+  height: 60px; /* (~25px ópticos) */
 }
 
 /* Nav */
