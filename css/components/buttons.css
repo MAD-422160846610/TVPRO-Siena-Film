@@ -93,8 +93,8 @@
 
 /* ── Icon inside button ── */
 .btn__icon {
-  width: 18px;
-  height: 18px;
+  width: 22px; /* Más robusto */
+  height: 22px;
   transition: transform 0.3s var(--ease-cinematic);
 }
 

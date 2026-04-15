@@ -48,8 +48,8 @@
 }
 
 .ticket__thumb {
-  width: 36px;
-  height: 36px;
+  width: 44px; /* Widget más legible */
+  height: 44px;
   border-radius: 2px;
   background: var(--color-brand-primario);
   flex-shrink: 0;
@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-titulos);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: white;
   font-weight: var(--fw-black);
   letter-spacing: 0.05em;
@@ -74,7 +74,7 @@
 
 .ticket__name {
   font-family: var(--font-titulos);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: var(--fw-black);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -87,8 +87,8 @@
 }
 
 .ticket__chevron {
-  width: 16px;
-  height: 16px;
+  width: 20px; /* Mejor visibilidad del interactuable */
+  height: 20px;
   transition: transform 0.3s var(--ease-expo);
   flex-shrink: 0;
 }

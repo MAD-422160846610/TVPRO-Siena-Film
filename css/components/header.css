@@ -42,14 +42,14 @@
 }
 
 .tv-logo-svg {
-  height: 28px;
+  height: 34px; /* Aumentado para mayor presencia en desktop */
   width: auto;
   fill: var(--color-text-primario);
   transition: fill 0.3s var(--ease-cinematic);
 }
 
 .header.is-scrolled .tv-logo-svg {
-  height: 24px;
+  height: 28px;
 }
 
 /* Nav */

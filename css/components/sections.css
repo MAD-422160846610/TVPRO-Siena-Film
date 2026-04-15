@@ -214,7 +214,7 @@
 }
 
 .footer .tv-logo-svg {
-  height: 36px;
+  height: 48px; /* Footer con más impacto de marca */
   margin-bottom: var(--space-sm);
 }
 
