@@ -31,25 +31,27 @@ body.is-loading {
   animation: preloader-exit-glitch 0.4s var(--ease-expo) forwards;
 }
 
-/* ── Capa de Glitch ── */
+/* ── Brand Layer ── */
 .preloader__brand {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 100; /* Stacking context garantizado */
   mix-blend-mode: difference;
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 1; /* Forzamos opacidad para diagnóstico inicial */
+  animation: brand-emerge 0.6s var(--ease-expo) 0.3s forwards;
 }
 
-.preloader__logo-img {
-  width: 240px;
+.tv-logo-svg {
+  width: 280px;
   height: auto;
-  /* Convertimos el logo a blanco puro para que el 'difference' funcione como zebra */
-  filter: brightness(0) invert(1);
+  fill: #ffffff !important; /* Blanco puro innegociable */
+  color: #ffffff !important;
 }
 
 .preloader__glitch {
@@ -87,6 +89,7 @@ body.is-loading {
   position: absolute;
   inset: 0;
   display: flex;
+  z-index: 1; /* Por debajo del brand */
   animation: zebra-pulse 0.15s steps(1) infinite;
 }
 
@@ -109,60 +112,18 @@ body.is-loading {
   50% { filter: invert(1); }
 }
 
-/* ── Texto del logo sobre las barras ── */
-.preloader__brand {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  opacity: 0;
-  animation: brand-emerge 0.6s var(--ease-expo) 0.3s forwards;
-
-  /*
-   * MIX-BLEND-MODE: DIFFERENCE
-   * Cuando el texto está sobre barra blanca → se ve negro.
-   * Cuando está sobre barra negra → se ve blanco.
-   * Resultado: el logo parece "cortado" por las barras. CINEMATOGRÁFICO.
-   */
-  mix-blend-mode: difference;
-}
-
 @keyframes brand-emerge {
   from {
     opacity: 0;
-    transform: scale(0.92);
+    transform: translate(-50%, -50%) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-/* El ícono TV necesita color sólido para el blend */
-.preloader__icon {
-  width: 64px;
-  height: 64px;
-  background: #f5f5f5;  /* blanco puro para que blend-mode funcione */
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-titulos);
-  font-size: 1.6rem;
-  font-weight: var(--fw-black);
-  color: #050505;
-  letter-spacing: 0.02em;
-}
-
-.preloader__text {
-  font-family: var(--font-titulos);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: var(--fw-black);
-  color: #f5f5f5;  /* blanco puro para contraste máximo */
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
+/* Eliminamos las clases de texto legacy del preloader ya que usamos el SVG */
 
 .preloader__text .accent {
   /* Con blend-mode, no necesitamos color de accent separado,

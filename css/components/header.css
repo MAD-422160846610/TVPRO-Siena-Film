@@ -32,36 +32,24 @@
 .header__logo {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
   text-decoration: none;
   z-index: 101;
+  transition: opacity 0.3s ease;
 }
 
-.header__logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--color-brand-primario);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-titulos);
-  font-size: 1rem;
-  font-weight: var(--fw-black);
-  color: white;
-  letter-spacing: 0.02em;
+.header__logo:hover {
+  opacity: 0.8;
 }
 
-.header__logo-text {
-  font-family: var(--font-titulos);
-  font-size: 1.5rem;
-  font-weight: var(--fw-black);
-  color: var(--color-text-primario);
-  letter-spacing: 0.04em;
+.tv-logo-svg {
+  height: 28px;
+  width: auto;
+  fill: var(--color-text-primario);
+  transition: fill 0.3s var(--ease-cinematic);
 }
 
-.header__logo-text .accent {
-  color: var(--color-brand-primario);
+.header.is-scrolled .tv-logo-svg {
+  height: 24px;
 }
 
 /* Nav */

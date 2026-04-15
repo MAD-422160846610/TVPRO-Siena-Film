@@ -191,40 +191,57 @@ function initProgramReel() {
   const slides = document.querySelectorAll('.ps');
   if (!slides.length) return;
 
-  // —— 1. Velocity-based roll blur (the Siena magic) ——
+  // —— 1. Velocity-based cinematic effects (The Siena Magic) ——
   let lastScrollY = window.scrollY;
   let blurTimer;
 
   window.addEventListener('scroll', () => {
     const currentY = window.scrollY;
     const velocity = Math.abs(currentY - lastScrollY);
-    lastScrollY = currentY;
-
-    // Only apply blur when the programs section is in view
+    
+    // Only apply effects when the programs section is in view
     const reel = document.querySelector('.programs-reel');
-    if (!reel) return;
+    if (!reel) {
+      lastScrollY = currentY;
+      return;
+    }
     const reelRect = reel.getBoundingClientRect();
-    if (reelRect.top > window.innerHeight || reelRect.bottom < 0) return;
+    if (reelRect.top > window.innerHeight || reelRect.bottom < 0) {
+      lastScrollY = currentY;
+      return;
+    }
 
-    if (velocity > 4) {
-      const blur = Math.min(velocity * 0.35, 22);
-      const sat = Math.max(1 - velocity * 0.025, 0.25);
-      const bright = 1 + Math.min(velocity * 0.012, 0.7);
+    if (velocity > 3) {
+      const blur = Math.min(velocity * 0.4, 18);
+      const sat = Math.max(1 - velocity * 0.03, 0.2);
+      const grayscale = Math.min(velocity * 0.04, 1);
+      const bright = 1 + Math.min(velocity * 0.015, 0.6);
       
-      // Desplazamiento tipo rollo de película (vertical drag)
-      const rollOffset = (currentY - lastScrollY) * 0.15;
-      const jumpThreshold = 15; // Velocidad para activar el salto de frame
+      // Cinematic Skew (Siena-style)
+      const skew = Math.min(velocity * 0.12, 6) * (currentY > lastScrollY ? 1 : -1);
+      // Vertical drag (film strip feeling)
+      const rollOffset = (currentY - lastScrollY) * 0.18;
+
+      const jumpThreshold = 18; // Cinematic flicker
+      const glitchThreshold = 35; // Heavy interference
 
       slides.forEach((slide) => {
         const card = slide.querySelector('.ps__card');
         if (card) {
-          card.style.filter = `blur(${blur}px) saturate(${sat}) brightness(${bright})`;
-          card.style.transform = `translateY(${rollOffset}px)`;
+          card.style.filter = `blur(${blur}px) saturate(${sat}) grayscale(${grayscale}) brightness(${bright})`;
+          card.style.transform = `translateY(${rollOffset}px) skewY(${skew}deg)`;
           
-          if (velocity > jumpThreshold) {
+          if (velocity > glitchThreshold) {
+            slide.classList.add('is-glitching');
+            card.classList.add('is-glitching');
+          } else if (velocity > jumpThreshold) {
             card.classList.add('is-jumping');
+            slide.classList.remove('is-glitching');
+            card.classList.remove('is-glitching');
           } else {
             card.classList.remove('is-jumping');
+            slide.classList.remove('is-glitching');
+            card.classList.remove('is-glitching');
           }
         }
       });
@@ -237,10 +254,13 @@ function initProgramReel() {
             card.style.filter = '';
             card.style.transform = '';
             card.classList.remove('is-jumping');
+            card.classList.remove('is-glitching');
+            slide.classList.remove('is-glitching');
           }
         });
-      }, 150);
+      }, 180);
     }
+    lastScrollY = currentY;
   }, { passive: true });
 
   // —— 2. Activate slide in view (IS-ACTIVE class + ticket sync) ——
@@ -248,9 +268,29 @@ function initProgramReel() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          // Si ya es activa, no hacemos nada para evitar flickering accidental
+          if (entry.target.classList.contains('is-active')) return;
+
           // Desactivar todas, activar esta
-          slides.forEach((s) => s.classList.remove('is-active'));
+          slides.forEach((s) => {
+            s.classList.remove('is-active');
+            s.classList.remove('is-glitching');
+            const card = s.querySelector('.ps__card');
+            if (card) card.classList.remove('is-glitching');
+          });
+          
           entry.target.classList.add('is-active');
+
+          // Trigger "Interference Pulse" on change (High Impact)
+          const card = entry.target.querySelector('.ps__card');
+          if (card) {
+            entry.target.classList.add('is-glitching');
+            card.classList.add('is-glitching');
+            setTimeout(() => {
+              entry.target.classList.remove('is-glitching');
+              card.classList.remove('is-glitching');
+            }, 300);
+          }
 
           // Sync ticket
           const name = entry.target.dataset.name || 'Programa';
@@ -259,7 +299,7 @@ function initProgramReel() {
         }
       });
     },
-    { threshold: 0.55 }  // El slide debe estar mayormente visible
+    { threshold: 0.55 }
   );
 
   slides.forEach((slide) => slideObserver.observe(slide));

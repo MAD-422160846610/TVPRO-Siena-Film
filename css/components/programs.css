@@ -33,15 +33,40 @@
   transform-origin: center center;
 }
 
-/* Efecto de salto de frame (flicker vertical) */
+/* Efecto de salto de frame y jitter cinemático (Siena-style) */
 .ps__card.is-jumping {
-  animation: frame-jump 0.1s steps(2) infinite;
+  animation: siena-jitter 0.12s steps(2) infinite;
 }
 
-@keyframes frame-jump {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-4px) scaleY(1.01); }
-  100% { transform: translateY(4px) scaleY(0.99); }
+/* Estado de interferencia pesada */
+.ps__card.is-glitching {
+  animation: siena-jitter 0.1s steps(2) infinite,
+             glitch-flash 0.5s var(--ease-expo) infinite;
+}
+
+@keyframes siena-jitter {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-2px, 1px) rotate(-0.2deg) scale(1.005); }
+  50% { transform: translate(2px, -1px) rotate(0.2deg) scale(0.998); }
+  75% { transform: translate(-1px, 2px) rotate(-0.1deg); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes glitch-flash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4) contrast(1.1); }
+}
+
+/* RGB Split para títulos durante el glitch */
+.ps.is-active.is-glitching .ps__title {
+  text-shadow: 2px 0 #00ffff, -2px 0 #ff00ff;
+  animation: rgb-split 0.1s steps(2) infinite;
+}
+
+@keyframes rgb-split {
+  0% { text-shadow: 2px 0 #00ffff, -2px 0 #ff00ff; }
+  50% { text-shadow: -2px 0 #00ffff, 2px 0 #ff00ff; }
+  100% { text-shadow: 3px 0 #00ffff, -3px 0 #ff00ff; }
 }
 
 /* Gradient background cards */

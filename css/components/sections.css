@@ -213,6 +213,11 @@
   padding-block: var(--space-3xl);
 }
 
+.footer .tv-logo-svg {
+  height: 36px;
+  margin-bottom: var(--space-sm);
+}
+
 .footer__inner {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
