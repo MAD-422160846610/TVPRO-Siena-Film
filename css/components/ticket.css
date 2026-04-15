@@ -4,8 +4,8 @@
    =================================================== */
 
 .ticket {
-  position: absolute;
-  top: var(--space-xl);
+  position: fixed;
+  top: 120px; /* Clearance generosa para no tapar el header */
   right: var(--space-xl);
   z-index: 200;
 
