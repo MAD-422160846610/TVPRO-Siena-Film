@@ -4,9 +4,9 @@
    =================================================== */
 
 .ticket {
-  position: fixed;
-  top: var(--space-lg);
-  right: var(--space-lg);
+  position: absolute;
+  top: var(--space-xl);
+  right: var(--space-xl);
   z-index: 200;
 
   /* Forma de ticket: border-radius asimétrico agresivo */
