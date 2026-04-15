@@ -1,3 +1,5 @@
+import { translations } from './i18n.js';
+
 /* ===================================================
    TV PRO — App Logic (Siena.film Edition)
    ─────────────────────────────────────────────────
@@ -131,15 +133,70 @@ function revealAllIntro() {
 }
 
 // ══════════════════════════════════════════════════════
-// 2. TICKET UI — Sincroniza con secciones activas
+// 2. I18N SYSTEM — Traducciones dinámicas
 // ══════════════════════════════════════════════════════
 
+let currentLang = localStorage.getItem('tvpro_lang') || 'es';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('tvpro_lang', lang);
+
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach((el) => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+
+  // Atributos dinámicos (aria-label, etc)
+  const attrElements = document.querySelectorAll('[data-i18n-attr]');
+  attrElements.forEach((el) => {
+    const [attr, key] = el.dataset.i18nAttr.split(':');
+    if (translations[lang][key]) {
+      el.setAttribute(attr, translations[lang][key]);
+    }
+  });
+
+  // Actualizar botones de idioma
+  document.querySelectorAll('.lang-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Refrescar ticket si existe contenido dinámico
+  if (typeof initTicket === 'function') {
+    // Re-trigger actual section text
+    const activeSection = document.querySelector('section.is-active, footer.is-active') || document.querySelector('.hero');
+    if (activeSection) {
+      const data = SECTION_DATA[activeSection.id];
+      if (data) updateTicket(translations[lang][`section_${activeSection.id}`], translations[lang][`section_${activeSection.id}_type`]);
+    }
+  }
+
+  console.log(`Language set to: ${lang}`);
+}
+
+function initI18n() {
+  const langBtns = document.querySelectorAll('.lang-btn');
+  langBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.lang !== currentLang) {
+        setLanguage(btn.dataset.lang);
+      }
+    });
+  });
+
+  // Idioma inicial
+  setLanguage(currentLang);
+}
+
 const SECTION_DATA = {
-  hero: { name: 'En Vivo', type: 'Señal' },
-  programs: { name: 'Programas', type: 'Contenido' },
-  features: { name: 'Por qué TV PRO', type: 'Características' },
-  about: { name: 'Nosotros', type: 'Compañía' },
-  contact: { name: 'Contacto', type: 'Info' },
+  hero: { name: 'section_live', type: 'section_signal' },
+  programs: { name: 'section_programs', type: 'section_content' },
+  features: { name: 'section_features', type: 'section_features_type' },
+  about: { name: 'section_about', type: 'section_about_type' },
+  contact: { name: 'section_contact', type: 'section_contact_type' },
 };
 
 function updateTicket(name, type) {
@@ -169,12 +226,16 @@ function initTicket() {
 
   // Sincronizar con secciones genéricas
   const sections = document.querySelectorAll('section[id]:not(.programs-reel), footer[id]');
-  const obs = new IntersectionObserver(
+    const obs = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const data = SECTION_DATA[entry.target.id];
-          if (data) updateTicket(data.name, data.type);
+          if (data) {
+            const translatedName = translations[currentLang][data.name];
+            const translatedType = translations[currentLang][data.type];
+            updateTicket(translatedName, translatedType);
+          }
         }
       });
     },
@@ -293,9 +354,11 @@ function initProgramReel() {
           }
 
           // Sync ticket
-          const name = entry.target.dataset.name || 'Programa';
-          const type = entry.target.dataset.type || 'TV PRO';
-          updateTicket(name, type);
+          const nameKey = entry.target.dataset.name;
+          const typeKey = entry.target.dataset.type;
+          const translatedName = translations[currentLang][nameKey] || nameKey;
+          const translatedType = translations[currentLang][typeKey] || typeKey;
+          updateTicket(translatedName, translatedType);
         }
       });
     },
@@ -513,6 +576,7 @@ function initCounters() {
 // INIT ALL
 // ══════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+  initI18n();
   initIntroSequence();
   initTicket();
   initProgramReel();
