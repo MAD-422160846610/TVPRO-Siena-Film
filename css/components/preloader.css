@@ -47,10 +47,10 @@ body.is-loading {
   animation: brand-emerge 0.6s var(--ease-expo) 0.3s forwards;
 }
 
-.tv-logo-svg {
-  width: 280px;
+.preloader .tv-logo-svg {
+  width: 420px; /* Tamaño cinematic */
   height: auto;
-  fill: #ffffff !important; /* Blanco puro innegociable */
+  fill: #ffffff !important;
   color: #ffffff !important;
 }
 
